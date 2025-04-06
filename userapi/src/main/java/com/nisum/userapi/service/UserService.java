@@ -1,48 +1,45 @@
 package com.nisum.userapi.service;
 
+import com.nisum.userapi.dto.PhoneDTO;
 import com.nisum.userapi.dto.UserRequestDTO;
 import com.nisum.userapi.dto.UserResponseDTO;
 import com.nisum.userapi.entity.Phone;
 import com.nisum.userapi.entity.User;
 import com.nisum.userapi.repository.UserRepository;
-import com.nisum.userapi.security.JwtUtil;
-import org.springframework.beans.factory.annotation.Value;
+import com.nisum.userapi.utils.JwtUtil;
+import com.nisum.userapi.utils.UserValidationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.regex.Pattern;
+import java.util.List;
 
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    private JwtUtil jwtUtil;
+    private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+    private final UserValidationUtils userUtils;
 
-    @Value("${validation.password.regex}")
-    private String passwordRegex;
-
-    @Value("${email.validation.regex}")
-    private String emailRegex;
-
-    public UserService(UserRepository userRepository, JwtUtil jwtUtil) {
+    public UserService(UserRepository userRepository, JwtUtil jwtUtil,UserValidationUtils userUtils) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
+        this.userUtils=userUtils;
     }
 
     public UserResponseDTO saveUser(UserRequestDTO request){
 
         if(userRepository.findByEmail(request.getEmail()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"The email is already registered");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"The email is already registered.");
         }
 
-        if(!Pattern.matches(passwordRegex,request.getPassword())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid password format");
+        if(!userUtils.isValidPasswordFormat(request.getPassword())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid password format.");
         }
 
-        if(!Pattern.matches(emailRegex,request.getEmail())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid email format");
+        if(!userUtils.isValidEmailFormat(request.getEmail())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid email format.");
         }
 
         User user=new User();
@@ -54,7 +51,6 @@ public class UserService {
         user.setModified(LocalDateTime.now());
         user.setLastLogin(LocalDateTime.now());
         user.setToken(jwtUtil.generateToken(request.getEmail()));
-
         user.setPhones(request.getPhones().stream().map(p->{
             Phone phone = new Phone();
             phone.setNumber(p.getNumber());
@@ -65,8 +61,17 @@ public class UserService {
 
         User savedUser=userRepository.save(user);
 
+         List<PhoneDTO> phonesDTO=savedUser.getPhones().stream().map(p->{
+             PhoneDTO phoneDTO=new PhoneDTO();
+             phoneDTO.setNumber(p.getNumber());
+             phoneDTO.setCitycode(p.getCityCode());
+             phoneDTO.setCountrycode(p.getCountryCode());
+             return phoneDTO;
+         }).toList();
+
         return new UserResponseDTO(savedUser.getId(),
+                savedUser.getName(), savedUser.getEmail(),
                 savedUser.getCreationDate(), savedUser.getModified(),
-                savedUser.getLastLogin(), savedUser.getToken(), savedUser.isActive());
+                savedUser.getLastLogin(), savedUser.getToken(), savedUser.isActive(),phonesDTO);
     }
 }
