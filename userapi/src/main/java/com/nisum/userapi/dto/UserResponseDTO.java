@@ -18,4 +18,14 @@ public class UserResponseDTO {
     private String token;
     private boolean isActive;
     private List<PhoneDTO> phones;
+
+
+    public UserResponseDTO(UUID userId, LocalDateTime creationDate, LocalDateTime modified, LocalDateTime lastLogin, String token, boolean isActive) {
+        this.userId = userId;
+        this.creationDate = creationDate;
+        this.modified = modified;
+        this.lastLogin = lastLogin;
+        this.token = token;
+        this.isActive = isActive;
+    }
 }

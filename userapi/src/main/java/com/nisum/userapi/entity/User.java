@@ -26,7 +26,7 @@ public class User {
     private String password;
     private String token;
     private boolean isActive;
-    private LocalDateTime created;
+    private LocalDateTime creationDate;
     private LocalDateTime modified;
     private LocalDateTime lastLogin;
 
