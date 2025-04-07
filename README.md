@@ -45,4 +45,7 @@ Para poder probar la API, en tu PC debes de tener instalado lo siguiente:
 
    - La ruta del script de la base de datos es nisum-user-api/schema.sql 
 
+## Diagrama de la solución
+
+![image](https://github.com/user-attachments/assets/95b10557-eafa-4448-89a7-81e7389474b1)
 
