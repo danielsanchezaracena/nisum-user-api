@@ -47,5 +47,5 @@ Para poder probar la API, en tu PC debes de tener instalado lo siguiente:
 
 ## Diagrama de la solución
 
-![image](https://github.com/user-attachments/assets/95b10557-eafa-4448-89a7-81e7389474b1)
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/95b10557-eafa-4448-89a7-81e7389474b1">
 
