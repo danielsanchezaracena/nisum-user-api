@@ -16,8 +16,8 @@ public class Phone {
     private Long id;
 
     private String number;
-    private String cityCode;
-    private String countryCode;
+    private String citycode;
+    private String countrycode;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -54,8 +54,8 @@ public class UserService {
         user.setPhones(request.getPhones().stream().map(p->{
             Phone phone = new Phone();
             phone.setNumber(p.getNumber());
-            phone.setCityCode(p.getCitycode());
-            phone.setCountryCode(p.getCountrycode());
+            phone.setCitycode(p.getCitycode());
+            phone.setCountrycode(p.getCountrycode());
             return phone;
         }).toList());
 
@@ -64,8 +64,8 @@ public class UserService {
          List<PhoneDTO> phonesDTO=savedUser.getPhones().stream().map(p->{
              PhoneDTO phoneDTO=new PhoneDTO();
              phoneDTO.setNumber(p.getNumber());
-             phoneDTO.setCitycode(p.getCityCode());
-             phoneDTO.setCountrycode(p.getCountryCode());
+             phoneDTO.setCitycode(p.getCitycode());
+             phoneDTO.setCountrycode(p.getCountrycode());
              return phoneDTO;
          }).toList();
 
