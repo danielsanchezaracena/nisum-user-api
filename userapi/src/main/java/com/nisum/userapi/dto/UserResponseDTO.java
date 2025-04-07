@@ -16,11 +16,11 @@ public class UserResponseDTO {
     private UUID id;
     private String name;
     private String email;
-    private LocalDateTime creationDate;
+    private LocalDateTime created;
     private LocalDateTime modified;
-    private LocalDateTime lastLogin;
+    private LocalDateTime last_login;
     private String token;
-    private boolean isActive;
+    private boolean isactive;
     private List<PhoneDTO> phones;
 
 }

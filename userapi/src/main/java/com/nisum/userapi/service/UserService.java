@@ -46,8 +46,8 @@ public class UserService {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-        user.setActive(true);
-        user.setCreationDate(LocalDateTime.now());
+        user.setIsactive(true);
+        user.setCreated(LocalDateTime.now());
         user.setModified(LocalDateTime.now());
         user.setLastLogin(LocalDateTime.now());
         user.setToken(jwtUtil.generateToken(request.getEmail()));
@@ -71,7 +71,7 @@ public class UserService {
 
         return new UserResponseDTO(savedUser.getId(),
                 savedUser.getName(), savedUser.getEmail(),
-                savedUser.getCreationDate(), savedUser.getModified(),
-                savedUser.getLastLogin(), savedUser.getToken(), savedUser.isActive(),phonesDTO);
+                savedUser.getCreated(), savedUser.getModified(),
+                savedUser.getLastLogin(), savedUser.getToken(), savedUser.isIsactive(),phonesDTO);
     }
 }

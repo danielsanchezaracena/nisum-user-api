@@ -25,12 +25,12 @@ public class User {
     private String email;
     private String password;
     private String token;
-    private boolean isActive;
-    private LocalDateTime creationDate;
+    private boolean isactive;
+    private LocalDateTime created;
     private LocalDateTime modified;
     private LocalDateTime lastLogin;
 
-    @OneToMany(mappedBy = "user",cascade= CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "user",cascade= CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Phone> phones=new ArrayList<>();
 
 }
